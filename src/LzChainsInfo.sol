@@ -4,9 +4,7 @@ pragma solidity ^0.8.0;
 import {LzChainSetup} from "./LzChainSetup.sol";
 
 contract LzChainsInfo is LzChainSetup {
-    address OP_STACK_WETH = 0x4200000000000000000000000000000000000006;
-
-    function configureOptimism() private {
+    function configureOptimismLz() private {
         configureLzChain(
             "optimism",
             111,
@@ -14,7 +12,7 @@ contract LzChainsInfo is LzChainSetup {
         );
     }
 
-    function configureBase() private {
+    function configureBaseLz() private {
         configureLzChain(
             "base",
             184,
@@ -22,7 +20,7 @@ contract LzChainsInfo is LzChainSetup {
         );
     }
 
-    function configureArbitrum() private {
+    function configureArbitrumLz() private {
         configureLzChain(
             "arbitrum",
             110,
@@ -30,7 +28,7 @@ contract LzChainsInfo is LzChainSetup {
         );
     }
 
-    function configureEthereum() private {
+    function configureEthereumLz() private {
         configureLzChain(
             "ethereum",
             101,
@@ -38,7 +36,7 @@ contract LzChainsInfo is LzChainSetup {
         );
     }
 
-    function configureSepolia() private {
+    function configureSepoliaLz() private {
         configureLzChain(
             "sepolia",
             10161,
@@ -46,7 +44,7 @@ contract LzChainsInfo is LzChainSetup {
         );
     }
 
-    function configureFtmTestnet() private {
+    function configureFtmTestnetLz() private {
         configureLzChain(
             "ftm-testnet",
             10112,
@@ -54,7 +52,7 @@ contract LzChainsInfo is LzChainSetup {
         );
     }
 
-    function configureZora() private {
+    function configureZoraLz() private {
         configureLzChain(
             "zora",
             195,
@@ -62,7 +60,7 @@ contract LzChainsInfo is LzChainSetup {
         );
     }
 
-    function configureZoraGoerli() private {
+    function configureZoraGoerliLz() private {
         configureLzChain(
             "zora-goerli",
             10195,
@@ -70,7 +68,7 @@ contract LzChainsInfo is LzChainSetup {
         );
     }
 
-    function configureOptimismGoerli() private {
+    function configureOptimismGoerliLz() private {
         configureLzChain(
             "optimism-goerli",
             10132,
@@ -78,7 +76,7 @@ contract LzChainsInfo is LzChainSetup {
         );
     }
 
-    function configureAvalanche() private {
+    function configureAvalancheLz() private {
         configureLzChain(
             "avalanche",
             106,
@@ -86,7 +84,7 @@ contract LzChainsInfo is LzChainSetup {
         );
     }
 
-    function configurePolygon() private {
+    function configurePolygonLz() private {
         configureLzChain(
             "polygon",
             109,
@@ -95,16 +93,16 @@ contract LzChainsInfo is LzChainSetup {
     }
 
     function setupLzChainInfo() public {
-        configureSepolia();
-        configureOptimismGoerli();
-        configureZoraGoerli();
-        configureFtmTestnet();
-        configureEthereum();
-        configureArbitrum();
-        configureOptimism();
-        configureBase();
-        configureZora();
-        configureAvalanche();
-        configurePolygon();
+        configureSepoliaLz();
+        configureOptimismGoerliLz();
+        configureZoraGoerliLz();
+        configureFtmTestnetLz();
+        configureEthereumLz();
+        configureArbitrumLz();
+        configureOptimismLz();
+        configureBaseLz();
+        configureZoraLz();
+        configureAvalancheLz();
+        configurePolygonLz();
     }
 }
