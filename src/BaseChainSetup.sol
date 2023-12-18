@@ -3,6 +3,7 @@ pragma solidity ^0.8.0;
 
 import {console2} from "forge-std/console2.sol";
 import {CommonBase} from "forge-std/Base.sol";
+import {ERC20} from "solmate/tokens/ERC20.sol";
 
 contract BaseChainSetup is CommonBase {
     string private runtime;
@@ -17,6 +18,23 @@ contract BaseChainSetup is CommonBase {
     mapping(string => uint256) forkLookup;
     mapping(string => bool) gasEthLookup;
     mapping(string => address) wethLookup;
+
+    function wethBalance(
+        string memory chain,
+        address user
+    ) public returns (uint) {
+        return ERC20(getWeth(chain)).balanceOf(user);
+    }
+
+    function getWeth(string memory chain) public view returns (address payable) {
+        address weth = payable(wethLookup[chain]);
+        require(
+            weth != address(0),
+            string.concat("no weth found for chain: ", chain)
+        );
+        return payable(weth);
+    }
+
     mapping(string => uint256) chainIdLookup;
 
     function isMainnet() public returns (bool) {
@@ -73,6 +91,7 @@ contract BaseChainSetup is CommonBase {
             forkLookup[chain] = forkId;
         } catch {}
         gasEthLookup[chain] = isGasEth;
+        vm.label(weth, string.concat(chain, "_WETH"));
         wethLookup[chain] = weth;
         chainIdLookup[chain] = chainId;
     }

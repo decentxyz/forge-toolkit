@@ -8,13 +8,17 @@ import {BaseChainSetup} from "./BaseChainSetup.sol";
 contract WethMintHelper is BaseChainSetup {
     mapping(string => address) wethWhaleLookup;
 
-    function setupWhaleInfo() public {
+    function _setupWhaleInfo() private {
         wethWhaleLookup["avalanche"] = address(
             0xe50fA9b3c56FfB159cB0FCA61F5c9D750e8128c8
         );
         wethWhaleLookup["polygon"] = address(
             0x28424507fefb6f7f8E9D3860F56504E4e5f5f390
         );
+    }
+
+    function setupWethHelperInfo() public {
+        _setupWhaleInfo();
     }
 
     function mintWethTo(
@@ -25,6 +29,7 @@ contract WethMintHelper is BaseChainSetup {
         switchTo(chain);
         if (gasEthLookup[chain]) {
             startImpersonating(to);
+            dealTo(chain, to, to.balance + amount);
             WETH(payable(wethLookup[chain])).deposit{value: amount}();
         } else {
             address whale = wethWhaleLookup[chain];
