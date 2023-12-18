@@ -37,7 +37,7 @@ contract BaseChainSetup is CommonBase {
         return payable(weth);
     }
 
-    mapping(string => uint256) chainIdLookup;
+    mapping(string => uint16) chainIdLookup;
 
     function isMainnet() public returns (bool) {
         return vm.envOr("MAINNET", false) && strCompare(runtime, ENV_MAINNET);
