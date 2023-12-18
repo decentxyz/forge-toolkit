@@ -86,7 +86,7 @@ contract BaseChainSetup is CommonBase {
     function configureChain(
         string memory chain,
         bool isGasEth,
-        uint256 chainId,
+        uint16 chainId,
         address weth
     ) public {
         try vm.createFork(_forkAlias(chain)) returns (uint256 forkId) {
