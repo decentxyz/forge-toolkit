@@ -39,12 +39,4 @@ contract BalanceAssertions is BaseChainSetup, Test {
         switchTo(chain);
         return user.balance;
     }
-
-    function wethBalance(
-        string memory chain,
-        address user
-    ) internal returns (uint256) {
-        switchTo(chain);
-        return ERC20(wethLookup[chain]).balanceOf(user);
-    }
 }
