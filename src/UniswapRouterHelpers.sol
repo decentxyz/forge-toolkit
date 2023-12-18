@@ -30,6 +30,9 @@ contract UniswapRouterHelpers is BaseChainSetup, ChainAliases {
         bytes memory path,
         uint256 amountIn
     ) public returns (uint256) {
+        if (path.length == 0) {
+            return amountIn;
+        }
         return _switchAndGetQuoter(chain).quoteExactInput(path, amountIn);
     }
 
@@ -38,6 +41,9 @@ contract UniswapRouterHelpers is BaseChainSetup, ChainAliases {
         bytes memory path,
         uint256 amountOut
     ) public returns (uint256) {
+        if (path.length == 0) {
+            return amountOut;
+        }
         return _switchAndGetQuoter(chain).quoteExactOutput(path, amountOut);
     }
 
