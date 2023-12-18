@@ -22,11 +22,13 @@ contract BaseChainSetup is CommonBase {
     function wethBalance(
         string memory chain,
         address user
-    ) public returns (uint) {
+    ) public view returns (uint) {
         return ERC20(getWeth(chain)).balanceOf(user);
     }
 
-    function getWeth(string memory chain) public view returns (address payable) {
+    function getWeth(
+        string memory chain
+    ) public view returns (address payable) {
         address weth = payable(wethLookup[chain]);
         require(
             weth != address(0),
