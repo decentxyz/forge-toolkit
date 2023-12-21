@@ -27,6 +27,7 @@ contract TokenHelper is BaseChainSetup {
             string.concat("no token for chain: ", chain)
         );
         ERC20(token).transfer(to, amount);
+        stopImpersonating();
     }
 
     function getTokenAddress(
