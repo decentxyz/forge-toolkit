@@ -46,8 +46,8 @@ contract ChainsInfo is BaseChainSetup {
             "ftm-testnet",
             false,
             4002,
-            0x84c7dd519ea924bf1cf6613f9127f26d7ab801d0,
-            0x07b9c47452c41e8e00f98ac4c075f5c443281d2a
+            0x84C7dD519Ea924bf1Cf6613f9127F26D7aB801D0,
+            0x07B9c47452C41e8E00f98aC4c075F5c443281d2A
         );
     }
 
@@ -69,7 +69,7 @@ contract ChainsInfo is BaseChainSetup {
             false,
             43114,
             0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB,
-            0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7
+            0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7
         );
     }
 
@@ -79,7 +79,7 @@ contract ChainsInfo is BaseChainSetup {
             false,
             137,
             0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619,
-            0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270
+            0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270
         );
     }
 
