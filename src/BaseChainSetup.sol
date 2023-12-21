@@ -18,6 +18,7 @@ contract BaseChainSetup is CommonBase {
     mapping(string => uint256) forkLookup;
     mapping(string => bool) gasEthLookup;
     mapping(string => address) wethLookup;
+    mapping(string => address) wrappedLookup;
 
     function wethBalance(
         string memory chain,
@@ -29,12 +30,26 @@ contract BaseChainSetup is CommonBase {
     function getWeth(
         string memory chain
     ) public view returns (address payable) {
-        address weth = payable(wethLookup[chain]);
+        return payable(_getTokenForChain(chain, "weth", wethLookup));
+    }
+
+    function getWrapped(
+        string memory chain
+    ) public view returns (address payable) {
+        return payable(_getTokenForChain(chain, "wrapped", wrappedLookup));
+    }
+
+    function _getTokenForChain(
+        string memory chain,
+        string memory tokenName,
+        mapping(string => address) lookup
+    ) private view returns (address) {
+        address token = payable(lookup[chain]);
         require(
-            weth != address(0),
-            string.concat("no weth found for chain: ", chain)
+            token != address(0),
+            string.concat("no ", tokenName, " found for chain: ", chain)
         );
-        return payable(weth);
+        return token;
     }
 
     mapping(string => uint256) chainIdLookup;
@@ -89,12 +104,23 @@ contract BaseChainSetup is CommonBase {
         uint256 chainId,
         address weth
     ) public {
+        configureChain(chain, isGasEth, chainId, weth, weth);
+    }
+
+    function configureChain(
+        string memory chain,
+        bool isGasEth,
+        uint256 chainId,
+        address weth,
+        address wrapped
+    ) public {
         try vm.createFork(_forkAlias(chain)) returns (uint256 forkId) {
             forkLookup[chain] = forkId;
         } catch {}
         gasEthLookup[chain] = isGasEth;
         vm.label(weth, string.concat(chain, "_WETH"));
         wethLookup[chain] = weth;
+        wrappedLookup[chain] = wrapped;
         chainIdLookup[chain] = chainId;
     }
 
