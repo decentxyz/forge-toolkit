@@ -42,7 +42,7 @@ contract BaseChainSetup is CommonBase {
     function _getTokenForChain(
         string memory chain,
         string memory tokenName,
-        mapping(string => address) lookup
+        mapping(string => address) storage lookup
     ) private view returns (address) {
         address token = payable(lookup[chain]);
         require(
