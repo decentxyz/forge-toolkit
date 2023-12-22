@@ -53,8 +53,8 @@ contract UniswapRouterHelpers is BaseChainSetup, ChainAliases {
         address dstToken,
         uint24 tickSize
     ) private view returns (bytes memory path) {
-        srcToken = srcToken == address(0) ? wethLookup[chain] : srcToken;
-        dstToken = dstToken == address(0) ? wethLookup[chain] : dstToken;
+        srcToken = srcToken == address(0) ? getWrapped(chain) : srcToken;
+        dstToken = dstToken == address(0) ? getWrapped(chain) : dstToken;
         if (srcToken == dstToken) {
             return "";
         }
@@ -83,8 +83,8 @@ contract UniswapRouterHelpers is BaseChainSetup, ChainAliases {
         address dstToken,
         uint24 tickSize
     ) private view returns (bytes memory path) {
-        srcToken = srcToken == address(0) ? wethLookup[chain] : srcToken;
-        dstToken = dstToken == address(0) ? wethLookup[chain] : dstToken;
+        srcToken = srcToken == address(0) ? getWrapped(chain) : srcToken;
+        dstToken = dstToken == address(0) ? getWrapped(chain) : dstToken;
         if (srcToken == dstToken) {
             return bytes("");
         }

@@ -21,6 +21,17 @@ contract WethMintHelper is BaseChainSetup {
         _setupWhaleInfo();
     }
 
+    function mintWrappedTo(
+        string memory chain,
+        address to,
+        uint256 amount
+    ) public {
+        startImpersonating(to);
+        dealTo(chain, to, to.balance + amount);
+        WETH(getWrapped(chain)).deposit{value: amount}();
+        stopImpersonating();
+    }
+
     function mintWethTo(
         string memory chain,
         address to,
@@ -28,9 +39,7 @@ contract WethMintHelper is BaseChainSetup {
     ) public {
         switchTo(chain);
         if (gasEthLookup[chain]) {
-            startImpersonating(to);
-            dealTo(chain, to, to.balance + amount);
-            WETH(payable(wethLookup[chain])).deposit{value: amount}();
+            mintWrappedTo(chain, to, amount);
         } else {
             address whale = wethWhaleLookup[chain];
             if (whale == address(0)) {
@@ -38,7 +47,7 @@ contract WethMintHelper is BaseChainSetup {
             }
             startImpersonating(whale);
             ERC20(wethLookup[chain]).transfer(to, amount);
+            stopImpersonating();
         }
-        stopImpersonating();
     }
 }

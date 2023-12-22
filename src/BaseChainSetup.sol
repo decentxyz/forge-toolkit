@@ -27,6 +27,13 @@ contract BaseChainSetup is CommonBase {
         return ERC20(getWeth(chain)).balanceOf(user);
     }
 
+    function wrappedBalance(
+        string memory chain,
+        address user
+    ) public view returns (uint) {
+        return ERC20(getWrapped(chain)).balanceOf(user);
+    }
+
     function getWeth(
         string memory chain
     ) public view returns (address payable) {

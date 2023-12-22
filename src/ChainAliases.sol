@@ -6,6 +6,7 @@ contract ChainAliases {
     string constant arbitrum = "arbitrum";
     string constant optimism = "optimism";
     string constant polygon = "polygon";
+    string constant avalanche = "avalanche";
     string constant zora = "zora";
     string constant base = "base";
 }
