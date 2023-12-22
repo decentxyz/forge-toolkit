@@ -43,7 +43,7 @@ contract WethMintHelper is BaseChainSetup {
         } else {
             address whale = wethWhaleLookup[chain];
             if (whale == address(0)) {
-                revert(string.concat("no whale for chain ", chain));
+                revert(string.concat("no weth whale for chain ", chain));
             }
             startImpersonating(whale);
             ERC20(wethLookup[chain]).transfer(to, amount);

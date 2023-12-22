@@ -13,6 +13,9 @@ contract UniswapRouterHelpers is BaseChainSetup, ChainAliases {
     address constant COMMON_SWAPROUTER =
         0xE592427A0AEce92De3Edee1F18E0157C05861564;
     address constant COMMON_QUOTER = 0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6;
+    address constant AVAX_SWAPROUTER =
+        0xbb00FF08d01D300023C629E8fFfFcb65A5a578cE;
+    address constant AVAX_QUOTER = 0xbe0F5544EC67e9B3b2D979aaA43f18Fd87E6257F;
 
     function getUniRouter(string memory chain) public view returns (address) {
         return uniswapperLookup[chain];
@@ -47,12 +50,12 @@ contract UniswapRouterHelpers is BaseChainSetup, ChainAliases {
         return _switchAndGetQuoter(chain).quoteExactOutput(path, amountOut);
     }
 
-    function _onePathOut(
+    function onePathOut(
         string memory chain,
         address srcToken,
         address dstToken,
         uint24 tickSize
-    ) private view returns (bytes memory path) {
+    ) public view returns (bytes memory path) {
         srcToken = srcToken == address(0) ? getWrapped(chain) : srcToken;
         dstToken = dstToken == address(0) ? getWrapped(chain) : dstToken;
         if (srcToken == dstToken) {
@@ -66,7 +69,7 @@ contract UniswapRouterHelpers is BaseChainSetup, ChainAliases {
         address srcToken,
         address dstToken
     ) public view returns (bytes memory path) {
-        return _onePathIn(chain, srcToken, dstToken, DEFAULT_TICK_SIZE);
+        return onePathIn(chain, srcToken, dstToken, DEFAULT_TICK_SIZE);
     }
 
     function pathOut(
@@ -74,15 +77,15 @@ contract UniswapRouterHelpers is BaseChainSetup, ChainAliases {
         address srcToken,
         address dstToken
     ) public view returns (bytes memory path) {
-        return _onePathOut(chain, srcToken, dstToken, DEFAULT_TICK_SIZE);
+        return onePathOut(chain, srcToken, dstToken, DEFAULT_TICK_SIZE);
     }
 
-    function _onePathIn(
+    function onePathIn(
         string memory chain,
         address srcToken,
         address dstToken,
         uint24 tickSize
-    ) private view returns (bytes memory path) {
+    ) public view returns (bytes memory path) {
         srcToken = srcToken == address(0) ? getWrapped(chain) : srcToken;
         dstToken = dstToken == address(0) ? getWrapped(chain) : dstToken;
         if (srcToken == dstToken) {
@@ -92,16 +95,22 @@ contract UniswapRouterHelpers is BaseChainSetup, ChainAliases {
     }
 
     // from here: https://docs.uniswap.org/contracts/v3/reference/deployments
+    // for avax: https://gov.uniswap.org/t/deploy-uniswap-v3-on-avalanche/20587/19
+    // avax github pr: https://github.com/Uniswap/docs/pull/629/files?short_path=132b68b#diff-132b68b7465e5d26429a710879ab4c7e7ade298c9e6be35279a7794054bc2126
     function loadAllUniRouterInfo() public {
         uniswapperLookup[ethereum] = COMMON_SWAPROUTER;
         uniswapperLookup[arbitrum] = COMMON_SWAPROUTER;
         uniswapperLookup[optimism] = COMMON_SWAPROUTER;
         uniswapperLookup[polygon] = COMMON_SWAPROUTER;
-        vm.label(COMMON_SWAPROUTER, "Uniswap Swapper");
+        uniswapperLookup[avalanche] = AVAX_SWAPROUTER;
+        vm.label(COMMON_SWAPROUTER, "Uniswap Common Swap Router");
+        vm.label(AVAX_SWAPROUTER, "Uniswap AVAX Swap Router");
         quoterLookup[ethereum] = IQuoter(COMMON_QUOTER);
         quoterLookup[arbitrum] = IQuoter(COMMON_QUOTER);
         quoterLookup[optimism] = IQuoter(COMMON_QUOTER);
         quoterLookup[polygon] = IQuoter(COMMON_QUOTER);
-        vm.label(COMMON_QUOTER, "Uniswap Quoter");
+        quoterLookup[avalanche] = IQuoter(AVAX_QUOTER);
+        vm.label(COMMON_QUOTER, "Uniswap Common Quoter");
+        vm.label(AVAX_QUOTER, "Uniswap AVAX Quoter");
     }
 }

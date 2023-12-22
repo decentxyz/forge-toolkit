@@ -77,6 +77,7 @@ contract UsdcHelper is TokenHelper, ChainAliases {
         _addTokenAddress(arbitrum, 0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8);
         _addTokenAddress(optimism, 0x7F5c764cBc14f9669B88837ca1490cCa17c31607);
         _addTokenAddress(polygon, 0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174);
+        _addTokenAddress(avalanche, 0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E);
     }
 
     function _setupUsdcWhaleInfo() private {
@@ -84,5 +85,6 @@ contract UsdcHelper is TokenHelper, ChainAliases {
         _addWhaleAddress(arbitrum, 0xC67E9Efdb8a66A4B91b1f3731C75F500130373A4);
         _addWhaleAddress(optimism, 0xDecC0c09c3B5f6e92EF4184125D5648a66E35298);
         _addWhaleAddress(polygon, 0xf89d7b9c864f589bbF53a82105107622B35EaA40);
+        _addWhaleAddress(avalanche, 0x9f8c163cBA728e99993ABe7495F06c0A3c8Ac8b9);
     }
 }
