@@ -2,17 +2,18 @@
 pragma solidity ^0.8.0;
 
 import {BaseChainSetup} from "./BaseChainSetup.sol";
-import {IQuoter} from "@uniswap/v3-periphery/interfaces/IQuoter.sol";
+import {IQuoterV2} from "@uniswap/v3-periphery/interfaces/IQuoterV2.sol";
+
 import {ChainAliases} from "./ChainAliases.sol";
 
 contract UniswapRouterHelpers is BaseChainSetup, ChainAliases {
-    mapping(string => IQuoter) quoterLookup;
+    mapping(string => IQuoterV2) quoterLookup;
     mapping(string => address) public uniswapperLookup;
 
     uint24 constant DEFAULT_TICK_SIZE = 100;
-    address constant COMMON_SWAPROUTER =
-        0xE592427A0AEce92De3Edee1F18E0157C05861564;
-    address constant COMMON_QUOTER = 0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6;
+    address constant COMMON_SWAP_ROUTER_02 =
+        0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45;
+    address constant COMMON_QUOTER = 0x61fFE014bA17989E743c5F6cB21bF9697530B21e;
     address constant AVAX_SWAPROUTER =
         0xbb00FF08d01D300023C629E8fFfFcb65A5a578cE;
     address constant AVAX_QUOTER = 0xbe0F5544EC67e9B3b2D979aaA43f18Fd87E6257F;
@@ -23,7 +24,7 @@ contract UniswapRouterHelpers is BaseChainSetup, ChainAliases {
 
     function _switchAndGetQuoter(
         string memory chain
-    ) private returns (IQuoter quoter) {
+    ) private returns (IQuoterV2 quoter) {
         switchTo(chain);
         quoter = quoterLookup[chain];
     }
@@ -36,7 +37,11 @@ contract UniswapRouterHelpers is BaseChainSetup, ChainAliases {
         if (path.length == 0) {
             return amountIn;
         }
-        return _switchAndGetQuoter(chain).quoteExactInput(path, amountIn);
+        (uint256 amountOut, , , ) = _switchAndGetQuoter(chain).quoteExactInput(
+            path,
+            amountIn
+        );
+        return amountOut;
     }
 
     function quoteOut(
@@ -47,7 +52,11 @@ contract UniswapRouterHelpers is BaseChainSetup, ChainAliases {
         if (path.length == 0) {
             return amountOut;
         }
-        return _switchAndGetQuoter(chain).quoteExactOutput(path, amountOut);
+        (uint256 amountIn, , , ) = _switchAndGetQuoter(chain).quoteExactOutput(
+            path,
+            amountOut
+        );
+        return amountIn;
     }
 
     function onePathOut(
@@ -98,18 +107,18 @@ contract UniswapRouterHelpers is BaseChainSetup, ChainAliases {
     // for avax: https://gov.uniswap.org/t/deploy-uniswap-v3-on-avalanche/20587/19
     // avax github pr: https://github.com/Uniswap/docs/pull/629/files?short_path=132b68b#diff-132b68b7465e5d26429a710879ab4c7e7ade298c9e6be35279a7794054bc2126
     function loadAllUniRouterInfo() public {
-        uniswapperLookup[ethereum] = COMMON_SWAPROUTER;
-        uniswapperLookup[arbitrum] = COMMON_SWAPROUTER;
-        uniswapperLookup[optimism] = COMMON_SWAPROUTER;
-        uniswapperLookup[polygon] = COMMON_SWAPROUTER;
+        uniswapperLookup[ethereum] = COMMON_SWAP_ROUTER_02;
+        uniswapperLookup[arbitrum] = COMMON_SWAP_ROUTER_02;
+        uniswapperLookup[optimism] = COMMON_SWAP_ROUTER_02;
+        uniswapperLookup[polygon] = COMMON_SWAP_ROUTER_02;
         uniswapperLookup[avalanche] = AVAX_SWAPROUTER;
-        vm.label(COMMON_SWAPROUTER, "Uniswap Common Swap Router");
+        vm.label(COMMON_SWAP_ROUTER_02, "Uniswap Common Swap Router");
         vm.label(AVAX_SWAPROUTER, "Uniswap AVAX Swap Router");
-        quoterLookup[ethereum] = IQuoter(COMMON_QUOTER);
-        quoterLookup[arbitrum] = IQuoter(COMMON_QUOTER);
-        quoterLookup[optimism] = IQuoter(COMMON_QUOTER);
-        quoterLookup[polygon] = IQuoter(COMMON_QUOTER);
-        quoterLookup[avalanche] = IQuoter(AVAX_QUOTER);
+        quoterLookup[ethereum] = IQuoterV2(COMMON_QUOTER);
+        quoterLookup[arbitrum] = IQuoterV2(COMMON_QUOTER);
+        quoterLookup[optimism] = IQuoterV2(COMMON_QUOTER);
+        quoterLookup[polygon] = IQuoterV2(COMMON_QUOTER);
+        quoterLookup[avalanche] = IQuoterV2(AVAX_QUOTER);
         vm.label(COMMON_QUOTER, "Uniswap Common Quoter");
         vm.label(AVAX_QUOTER, "Uniswap AVAX Quoter");
     }
