@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 import {BaseChainSetup} from "./BaseChainSetup.sol";
-import {IQuoterV2} from "@uniswap/v3-periphery/interfaces/IQuoterV2.sol";
+import {IQuoterV2} from "@uniswap/v3-periphery/contracts/interfaces/IQuoterV2.sol";
 
 import {ChainAliases} from "./ChainAliases.sol";
 
@@ -10,7 +10,10 @@ contract UniswapRouterHelpers is BaseChainSetup, ChainAliases {
     mapping(string => IQuoterV2) quoterLookup;
     mapping(string => address) public uniswapperLookup;
 
-    uint24 constant DEFAULT_TICK_SIZE = 100;
+    uint24 constant TICK_SIZE_1 = 100;
+    uint24 constant TICK_SIZE_2 = 300;
+    uint24 constant TICK_SIZE_3 = 500;
+
     address constant COMMON_SWAP_ROUTER_02 =
         0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45;
     address constant COMMON_QUOTER = 0x61fFE014bA17989E743c5F6cB21bF9697530B21e;
@@ -29,37 +32,21 @@ contract UniswapRouterHelpers is BaseChainSetup, ChainAliases {
         quoter = quoterLookup[chain];
     }
 
-    function quoteIn(
+    function pathIn(
         string memory chain,
-        bytes memory path,
-        uint256 amountIn
-    ) public returns (uint256) {
-        if (path.length == 0) {
-            return amountIn;
+        address srcToken,
+        address dstToken,
+        uint24 tickSize
+    ) public view returns (bytes memory path) {
+        srcToken = srcToken == address(0) ? getWrapped(chain) : srcToken;
+        dstToken = dstToken == address(0) ? getWrapped(chain) : dstToken;
+        if (srcToken == dstToken) {
+            return bytes("");
         }
-        (uint256 amountOut, , , ) = _switchAndGetQuoter(chain).quoteExactInput(
-            path,
-            amountIn
-        );
-        return amountOut;
+        return abi.encodePacked(srcToken, tickSize, dstToken);
     }
 
-    function quoteOut(
-        string memory chain,
-        bytes memory path,
-        uint256 amountOut
-    ) public returns (uint256) {
-        if (path.length == 0) {
-            return amountOut;
-        }
-        (uint256 amountIn, , , ) = _switchAndGetQuoter(chain).quoteExactOutput(
-            path,
-            amountOut
-        );
-        return amountIn;
-    }
-
-    function onePathOut(
+    function pathOut(
         string memory chain,
         address srcToken,
         address dstToken,
@@ -73,34 +60,92 @@ contract UniswapRouterHelpers is BaseChainSetup, ChainAliases {
         return abi.encodePacked(dstToken, tickSize, srcToken);
     }
 
+    function quoteIn(
+        string memory chain,
+        bytes memory path,
+        uint256 amountIn
+    ) public returns (uint256 amountOut, bool success) {
+        if (path.length == 0) {
+            return (amountIn, true);
+        }
+        IQuoterV2 quoter = _switchAndGetQuoter(chain);
+        try quoter.quoteExactInput(path, amountIn) returns (
+            uint256 amtOut,
+            uint160[] memory,
+            uint32[] memory,
+            uint256
+        ) {
+            amountOut = amtOut;
+            success = true;
+        } catch {
+            amountOut = 0;
+            success = false;
+        }
+    }
+
+    function quoteOut(
+        string memory chain,
+        bytes memory path,
+        uint256 amountOut
+    ) public returns (uint256 amountIn, bool success) {
+        if (path.length == 0) {
+            return (amountOut, true);
+        }
+        IQuoterV2 quoter = _switchAndGetQuoter(chain);
+        try quoter.quoteExactOutput(path, amountOut) returns (
+            uint256 amtIn,
+            uint160[] memory,
+            uint32[] memory,
+            uint256
+        ) {
+            amountIn = amtIn;
+            success = true;
+        } catch {
+            amountIn = 0;
+            success = false;
+        }
+    }
+
+    function tryTickSize(
+        string memory chain,
+        address srcToken,
+        address dstToken,
+        uint24 tickSize
+    ) private returns (bool) {
+        (uint amount, bool success) = quoteIn(
+            chain,
+            pathIn(chain, srcToken, dstToken, tickSize),
+            1e9
+        );
+        return success;
+    }
+
     function pathIn(
         string memory chain,
         address srcToken,
         address dstToken
-    ) public view returns (bytes memory path) {
-        return onePathIn(chain, srcToken, dstToken, DEFAULT_TICK_SIZE);
+    ) public returns (bytes memory path) {
+        if (tryTickSize(chain, srcToken, dstToken, TICK_SIZE_1)) {
+            return pathIn(chain, srcToken, dstToken, TICK_SIZE_1);
+        }
+        if (tryTickSize(chain, srcToken, dstToken, TICK_SIZE_2)) {
+            return pathIn(chain, srcToken, dstToken, TICK_SIZE_2);
+        }
+        return pathIn(chain, srcToken, dstToken, TICK_SIZE_3);
     }
 
     function pathOut(
         string memory chain,
         address srcToken,
         address dstToken
-    ) public view returns (bytes memory path) {
-        return onePathOut(chain, srcToken, dstToken, DEFAULT_TICK_SIZE);
-    }
-
-    function onePathIn(
-        string memory chain,
-        address srcToken,
-        address dstToken,
-        uint24 tickSize
-    ) public view returns (bytes memory path) {
-        srcToken = srcToken == address(0) ? getWrapped(chain) : srcToken;
-        dstToken = dstToken == address(0) ? getWrapped(chain) : dstToken;
-        if (srcToken == dstToken) {
-            return bytes("");
+    ) public returns (bytes memory path) {
+        if (tryTickSize(chain, srcToken, dstToken, TICK_SIZE_1)) {
+            return pathOut(chain, srcToken, dstToken, TICK_SIZE_1);
         }
-        return abi.encodePacked(srcToken, tickSize, dstToken);
+        if (tryTickSize(chain, srcToken, dstToken, TICK_SIZE_2)) {
+            return pathOut(chain, srcToken, dstToken, TICK_SIZE_2);
+        }
+        return pathOut(chain, srcToken, dstToken, TICK_SIZE_3);
     }
 
     // from here: https://docs.uniswap.org/contracts/v3/reference/deployments
