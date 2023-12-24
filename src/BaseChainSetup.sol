@@ -19,6 +19,7 @@ contract BaseChainSetup is CommonBase {
     mapping(string => bool) gasEthLookup;
     mapping(string => address) wethLookup;
     mapping(string => address) wrappedLookup;
+    mapping(string => uint256) chainIdLookup;
 
     function wethBalance(
         string memory chain,
@@ -58,8 +59,6 @@ contract BaseChainSetup is CommonBase {
         );
         return token;
     }
-
-    mapping(string => uint256) chainIdLookup;
 
     function isMainnet() public returns (bool) {
         return vm.envOr("MAINNET", false) && strCompare(runtime, ENV_MAINNET);
