@@ -19,13 +19,52 @@ library SgEthAddress {
 
 contract SgChainsInfo is LzChainSetup {
     mapping(string => address) sgRouterLookup;
+    mapping(string => address) sgBridgeLookup;
+    mapping(string => address) sgComposerLookup;
     mapping(string => mapping(address => uint120)) sgPoolIdLookup;
+    uint8 internal constant TYPE_SWAP_REMOTE = 1;
+
+    address constant STARGATE_COMMON_COMPOSER =
+        0xeCc19E177d24551aA7ed6Bc6FE566eCa726CC8a9;
 
     // from here https://stargateprotocol.gitbook.io/stargate/developers/contract-addresses/mainnet
+    function addBridge(string memory chain, address _address) private {
+        sgBridgeLookup[chain] = _address;
+        vm.label(_address, string.concat("stargate_bridge_", chain));
+    }
 
     function addRouter(string memory chain, address _address) private {
         sgRouterLookup[chain] = _address;
         vm.label(_address, string.concat("stargate_router_", chain));
+    }
+
+    function addComposer(string memory chain, address _address) private {
+        sgComposerLookup[chain] = _address;
+        vm.label(_address, string.concat("stargate_composer_", chain));
+    }
+
+    function receiveStargateMessage(
+        string memory src,
+        string memory dst,
+        uint gas,
+        uint256 srcPoolId,
+        uint256 dstPoolId,
+        address target,
+        bytes memory payload
+    ) public {
+        address srcUa = sgBridgeLookup[src];
+        address dstUa = sgBridgeLookup[dst];
+        bytes memory payload = abi.encode(
+            TYPE_SWAP_REMOTE,
+            srcPoolId,
+            dstPoolId,
+            gas,
+            "",
+            "",
+            target,
+            payload
+        );
+        receiveLzMessage(src, dst, srcUa, dstUa, gas, payload);
     }
 
     function setupSgChainInfo() public {
@@ -40,6 +79,27 @@ contract SgChainsInfo is LzChainSetup {
         addRouter("linea", 0x2F6F07CDcf3588944Bf4C42aC74ff24bF56e7590);
         addRouter("kava", 0x2F6F07CDcf3588944Bf4C42aC74ff24bF56e7590);
         addRouter("mantle", 0x2F6F07CDcf3588944Bf4C42aC74ff24bF56e7590);
+
+        addComposer("ethereum", STARGATE_COMMON_COMPOSER);
+        addComposer("arbitrum", STARGATE_COMMON_COMPOSER);
+        addComposer("optimism", STARGATE_COMMON_COMPOSER);
+        addComposer("avalanche", STARGATE_COMMON_COMPOSER);
+        addComposer("polygon", STARGATE_COMMON_COMPOSER);
+        addComposer("fantom", STARGATE_COMMON_COMPOSER);
+        addComposer("base", STARGATE_COMMON_COMPOSER);
+        addComposer("metis", STARGATE_COMMON_COMPOSER);
+        addComposer("linea", STARGATE_COMMON_COMPOSER);
+        addComposer("kava", STARGATE_COMMON_COMPOSER);
+        addComposer("mantle", 0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97);
+        vm.label(STARGATE_COMMON_COMPOSER, "stargate_composer");
+
+        addBridge("ethereum", 0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97);
+        addBridge("arbitrum", 0x352d8275AAE3e0c2404d9f68f6cEE084B5bEB3DD);
+        addBridge("optimism", 0x701a95707A0290AC8B90b3719e8EE5b210360883);
+        addBridge("polygon", 0x9d1B1669c73b033DFe47ae5a0164Ab96df25B944);
+        addBridge("base", 0xAF54BE5B6eEc24d6BFACf1cce4eaF680A8239398);
+        addBridge("avalanche", 0x9d1B1669c73b033DFe47ae5a0164Ab96df25B944);
+        addBridge("fantom", 0x45A01E4e04F14f7A4a6702c74187c5F6222033cd);
 
         sgPoolIdLookup["ethereum"][UsdcAddress.ethereum] = 1;
         sgPoolIdLookup["ethereum"][SgEthAddress.ethereum] = 13;
