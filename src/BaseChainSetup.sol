@@ -126,6 +126,9 @@ contract BaseChainSetup is CommonBase {
         gasEthLookup[chain] = isGasEth;
         vm.label(weth, string.concat(chain, "_WETH"));
         wethLookup[chain] = weth;
+        if (weth != wrapped) {
+            vm.label(wrapped, string.concat(chain, "_WRAPPED"));
+        }
         wrappedLookup[chain] = wrapped;
         chainIdLookup[chain] = chainId;
     }
