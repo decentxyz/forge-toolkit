@@ -43,30 +43,6 @@ contract SgChainsInfo is LzChainSetup {
         vm.label(_address, string.concat("stargate_composer_", chain));
     }
 
-    function receiveStargateMessage(
-        string memory src,
-        string memory dst,
-        uint gas,
-        uint256 srcPoolId,
-        uint256 dstPoolId,
-        address target,
-        bytes memory payload
-    ) public {
-        address srcUa = sgBridgeLookup[src];
-        address dstUa = sgBridgeLookup[dst];
-        bytes memory payload = abi.encode(
-            TYPE_SWAP_REMOTE,
-            srcPoolId,
-            dstPoolId,
-            gas,
-            "",
-            "",
-            target,
-            payload
-        );
-        receiveLzMessage(src, dst, srcUa, dstUa, gas, payload);
-    }
-
     function setupSgChainInfo() public {
         addRouter("ethereum", 0x8731d54E9D02c286767d56ac03e8037C07e01e98);
         addRouter("avalanche", 0x45A01E4e04F14f7A4a6702c74187c5F6222033cd);
