@@ -5,8 +5,9 @@ import {BaseChainSetup} from "./BaseChainSetup.sol";
 import {IQuoterV2} from "@uniswap/v3-periphery/contracts/interfaces/IQuoterV2.sol";
 
 import {ChainAliases} from "./ChainAliases.sol";
+import {UsdcHelper} from "./UsdcHelper.sol";
 
-contract UniswapRouterHelpers is BaseChainSetup, ChainAliases {
+contract UniswapRouterHelpers is BaseChainSetup, ChainAliases, UsdcHelper {
     mapping(string => IQuoterV2) quoterLookup;
     mapping(string => address) public uniswapperLookup;
 
@@ -134,11 +135,36 @@ contract UniswapRouterHelpers is BaseChainSetup, ChainAliases {
         return pathIn(chain, srcToken, dstToken, TICK_SIZE_3);
     }
 
+    function pathOutPolygon(
+        address srcToken,
+        address dstToken
+    ) public returns (bytes memory path, bool overrode) {
+        path = "";
+        overrode = false;
+        string memory polygon = "polygon";
+        if (
+            srcToken == getUsdc("polygon") &&
+            (dstToken == getWrapped("polygon") || dstToken == address(0))
+        ) {
+            path = pathOut("polygon", srcToken, dstToken, TICK_SIZE_3);
+            overrode = true;
+        }
+    }
+
     function pathOut(
         string memory chain,
         address srcToken,
         address dstToken
     ) public returns (bytes memory path) {
+        if (strCompare(chain, "polygon")) {
+            (bytes memory path, bool overrode) = pathOutPolygon(
+                srcToken,
+                dstToken
+            );
+            if (overrode) {
+                return path;
+            }
+        }
         if (tryTickSize(chain, srcToken, dstToken, TICK_SIZE_1)) {
             return pathOut(chain, srcToken, dstToken, TICK_SIZE_1);
         }
