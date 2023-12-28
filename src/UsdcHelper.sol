@@ -82,8 +82,8 @@ contract UsdcHelper is TokenHelper, ChainAliases {
 
     function _setupUsdcWhaleInfo() private {
         _addWhaleAddress(ethereum, 0xcEe284F754E854890e311e3280b767F80797180d);
-        _addWhaleAddress(arbitrum, 0xC67E9Efdb8a66A4B91b1f3731C75F500130373A4);
-        _addWhaleAddress(optimism, 0xDecC0c09c3B5f6e92EF4184125D5648a66E35298);
+        _addWhaleAddress(arbitrum, 0xB38e8c17e38363aF6EbdCb3dAE12e0243582891D);
+        _addWhaleAddress(optimism, 0xacD03D601e5bB1B275Bb94076fF46ED9D753435A);
         _addWhaleAddress(polygon, 0xf89d7b9c864f589bbF53a82105107622B35EaA40);
         _addWhaleAddress(avalanche, 0x9f8c163cBA728e99993ABe7495F06c0A3c8Ac8b9);
     }
