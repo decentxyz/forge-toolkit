@@ -182,6 +182,7 @@ contract UniswapRouterHelpers is BaseChainSetup, ChainAliases, UsdcHelper {
         uniswapperLookup[arbitrum] = COMMON_SWAP_ROUTER_02;
         uniswapperLookup[optimism] = COMMON_SWAP_ROUTER_02;
         uniswapperLookup[polygon] = COMMON_SWAP_ROUTER_02;
+        uniswapperLookup[base] = 0x2626664c2603336E57B271c5C0b26F421741e481;
         uniswapperLookup[avalanche] = AVAX_SWAPROUTER;
         vm.label(COMMON_SWAP_ROUTER_02, "Uniswap Common Swap Router");
         vm.label(AVAX_SWAPROUTER, "Uniswap AVAX Swap Router");
@@ -189,6 +190,9 @@ contract UniswapRouterHelpers is BaseChainSetup, ChainAliases, UsdcHelper {
         quoterLookup[arbitrum] = IQuoterV2(COMMON_QUOTER);
         quoterLookup[optimism] = IQuoterV2(COMMON_QUOTER);
         quoterLookup[polygon] = IQuoterV2(COMMON_QUOTER);
+        quoterLookup[base] = IQuoterV2(
+            0x3d4e44Eb1374240CE5F1B871ab261CD16335B76a
+        );
         quoterLookup[avalanche] = IQuoterV2(AVAX_QUOTER);
         vm.label(COMMON_QUOTER, "Uniswap Common Quoter");
         vm.label(AVAX_QUOTER, "Uniswap AVAX Quoter");

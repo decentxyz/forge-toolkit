@@ -10,10 +10,10 @@ contract WethMintHelper is BaseChainSetup {
 
     function _setupWhaleInfo() private {
         wethWhaleLookup["avalanche"] = address(
-            0xe50fA9b3c56FfB159cB0FCA61F5c9D750e8128c8
+            0x5E12fc70B97902AC19B9cB87F2aC5a8593769779
         );
         wethWhaleLookup["polygon"] = address(
-            0x28424507fefb6f7f8E9D3860F56504E4e5f5f390
+            0x1eED63EfBA5f81D95bfe37d82C8E736b974F477b
         );
     }
 
@@ -45,6 +45,7 @@ contract WethMintHelper is BaseChainSetup {
             if (whale == address(0)) {
                 revert(string.concat("no weth whale for chain ", chain));
             }
+            dealTo(chain, whale, 1 ether);
             startImpersonating(whale);
             ERC20(wethLookup[chain]).transfer(to, amount);
             stopImpersonating();
