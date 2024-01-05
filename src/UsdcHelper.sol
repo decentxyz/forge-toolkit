@@ -6,8 +6,13 @@ import {ERC20} from "solmate/tokens/ERC20.sol";
 import {ChainAliases} from "./ChainAliases.sol";
 
 contract TokenHelper is BaseChainSetup {
+    string TOKEN_NAME;
     mapping(string => address) tokenLookup;
     mapping(string => address) whaleLookup;
+
+    constructor(string memory tokenName) {
+        TOKEN_NAME = tokenName;
+    }
 
     function mintTokenTo(
         string memory chain,
@@ -18,13 +23,13 @@ contract TokenHelper is BaseChainSetup {
         address whale = whaleLookup[chain];
         require(
             whale != address(0),
-            string.concat("no whale for chain: ", chain)
+            string.concat("no whale for ", TOKEN_NAME, " on chain: ", chain)
         );
         startImpersonating(whale);
         address token = tokenLookup[chain];
         require(
             token != address(0),
-            string.concat("no token for chain: ", chain)
+            string.concat("no ", TOKEN_NAME, " for chain: ", chain)
         );
         ERC20(token).transfer(to, amount);
         stopImpersonating();
@@ -33,15 +38,28 @@ contract TokenHelper is BaseChainSetup {
     function getTokenAddress(
         string memory chain
     ) internal view returns (address) {
+        return getTokenAddress(chain, true);
+    }
+
+    function getTokenAddress(
+        string memory chain,
+        bool revertOnFailure
+    ) internal view returns (address) {
         address t = tokenLookup[chain];
-        require(t != address(0), string.concat("no token for chain: ", chain));
+        if (revertOnFailure) {
+            require(t != address(0), string.concat("no ", TOKEN_NAME, " for chain: ", chain));
+        }
         return t;
     }
 }
 
-contract UsdcHelper is TokenHelper, ChainAliases {
+contract UsdcHelper is TokenHelper("USDC"), ChainAliases {
     function getUsdc(string memory chain) public view returns (address) {
         return getTokenAddress(chain);
+    }
+
+    function getUsdcOrZeroAddress(string memory chain) public view returns (address) {
+        return getTokenAddress(chain, false);
     }
 
     function usdcBalance(
@@ -59,8 +77,6 @@ contract UsdcHelper is TokenHelper, ChainAliases {
         _setupUsdcTokenAddress();
         _setupUsdcWhaleInfo();
     }
-
-    string constant TOKEN_NAME = "USDC";
 
     function _addTokenAddress(string memory chain, address addy) private {
         tokenLookup[chain] = addy;
