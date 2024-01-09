@@ -113,7 +113,7 @@ contract UniswapRouterHelpers is BaseChainSetup, ChainAliases, UsdcHelper {
         address dstToken,
         uint24 tickSize
     ) private returns (bool) {
-        (uint amount, bool success) = quoteIn(
+        (/*uint amount*/, bool success) = quoteIn(
             chain,
             pathIn(chain, srcToken, dstToken, tickSize),
             1e9
@@ -138,15 +138,14 @@ contract UniswapRouterHelpers is BaseChainSetup, ChainAliases, UsdcHelper {
     function pathOutPolygon(
         address srcToken,
         address dstToken
-    ) public returns (bytes memory path, bool overrode) {
+    ) public view returns (bytes memory path, bool overrode) {
         path = "";
         overrode = false;
-        string memory polygon = "polygon";
         if (
-            srcToken == getUsdc("polygon") &&
-            (dstToken == getWrapped("polygon") || dstToken == address(0))
+            srcToken == getUsdc(polygon) &&
+            (dstToken == getWrapped(polygon) || dstToken == address(0))
         ) {
-            path = pathOut("polygon", srcToken, dstToken, TICK_SIZE_3);
+            path = pathOut(polygon, srcToken, dstToken, TICK_SIZE_3);
             overrode = true;
         }
     }
@@ -156,13 +155,13 @@ contract UniswapRouterHelpers is BaseChainSetup, ChainAliases, UsdcHelper {
         address srcToken,
         address dstToken
     ) public returns (bytes memory path) {
-        if (strCompare(chain, "polygon")) {
-            (bytes memory path, bool overrode) = pathOutPolygon(
+        if (strCompare(chain, polygon)) {
+            (bytes memory _path, bool overrode) = pathOutPolygon(
                 srcToken,
                 dstToken
             );
             if (overrode) {
-                return path;
+                return _path;
             }
         }
         if (tryTickSize(chain, srcToken, dstToken, TICK_SIZE_1)) {

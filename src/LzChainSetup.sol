@@ -12,20 +12,16 @@ abstract contract MockEndpoint is ILayerZeroEndpoint {
 
 contract LzChainSetup is BaseChainSetup {
     mapping(string => MockEndpoint) lzEndpointLookup;
-    mapping(string => address) lzLightNodeLookup;
     mapping(string => uint16) lzIdLookup;
 
     function configureLzChain(
         string memory chain,
         uint16 lzId,
-        address lzEndpoint,
-        address lzLightNode
+        address lzEndpoint
     ) internal {
         // from here: https://layerzero.gitbook.io/docs/technical-reference/mainnet/supported-chain-ids
         lzEndpointLookup[chain] = MockEndpoint(lzEndpoint);
         vm.label(lzEndpoint, string.concat("lz_endpoint_", chain));
-        lzLightNodeLookup[chain] = lzLightNode;
-        vm.label(lzLightNode, string.concat("lz_light_node_", chain));
         lzIdLookup[chain] = lzId;
     }
 
