@@ -1,1 +1,2 @@
 LayerZero/=lib/LayerZero/contracts/
+@uniswap/v3-periphery/=lib/v3-periphery/
