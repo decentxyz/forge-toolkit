@@ -5,6 +5,7 @@ import {LzChainSetup} from "./LzChainSetup.sol";
 
 contract LzChainsInfo is LzChainSetup {
   function setupLzChainInfo() public {
+    // configureLzChain(chain, lzId, lzEndpoint);
     configureLzChain("ethereum", 101, 0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675);
     configureLzChain("sepolia", 10161, 0xae92d5aD7583AD66E49A0c67BAd18F6ba52dDDc1);
     configureLzChain("arbitrum", 110, 0x3c2269811836af69497E5F486A85D7316753cf62);
