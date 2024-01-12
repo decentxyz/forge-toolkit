@@ -8,8 +8,8 @@ import {ChainAliases} from "./ChainAliases.sol";
 import {UsdcHelper} from "./UsdcHelper.sol";
 
 contract UniswapRouterHelpers is BaseChainSetup, ChainAliases, UsdcHelper {
-    mapping(string => IQuoterV2) quoterLookup;
-    mapping(string => address) public uniswapperLookup;
+    mapping(string => IQuoterV2) uniQuoterLookup;
+    mapping(string => address) public uniRouterLookup;
 
     uint24 constant TICK_SIZE_1 = 100;
     uint24 constant TICK_SIZE_2 = 300;
@@ -23,14 +23,14 @@ contract UniswapRouterHelpers is BaseChainSetup, ChainAliases, UsdcHelper {
     address constant AVAX_QUOTER = 0xbe0F5544EC67e9B3b2D979aaA43f18Fd87E6257F;
 
     function getUniRouter(string memory chain) public view returns (address) {
-        return uniswapperLookup[chain];
+        return uniRouterLookup[chain];
     }
 
     function _switchAndGetQuoter(
         string memory chain
     ) private returns (IQuoterV2 quoter) {
         switchTo(chain);
-        quoter = quoterLookup[chain];
+        quoter = uniQuoterLookup[chain];
     }
 
     function pathIn(
@@ -177,22 +177,22 @@ contract UniswapRouterHelpers is BaseChainSetup, ChainAliases, UsdcHelper {
     // for avax: https://gov.uniswap.org/t/deploy-uniswap-v3-on-avalanche/20587/19
     // avax github pr: https://github.com/Uniswap/docs/pull/629/files?short_path=132b68b#diff-132b68b7465e5d26429a710879ab4c7e7ade298c9e6be35279a7794054bc2126
     function loadAllUniRouterInfo() public {
-        uniswapperLookup[ethereum] = COMMON_SWAP_ROUTER_02;
-        uniswapperLookup[arbitrum] = COMMON_SWAP_ROUTER_02;
-        uniswapperLookup[optimism] = COMMON_SWAP_ROUTER_02;
-        uniswapperLookup[polygon] = COMMON_SWAP_ROUTER_02;
-        uniswapperLookup[base] = 0x2626664c2603336E57B271c5C0b26F421741e481;
-        uniswapperLookup[avalanche] = AVAX_SWAPROUTER;
+        uniRouterLookup[ethereum] = COMMON_SWAP_ROUTER_02;
+        uniRouterLookup[arbitrum] = COMMON_SWAP_ROUTER_02;
+        uniRouterLookup[optimism] = COMMON_SWAP_ROUTER_02;
+        uniRouterLookup[polygon] = COMMON_SWAP_ROUTER_02;
+        uniRouterLookup[base] = 0x2626664c2603336E57B271c5C0b26F421741e481;
+        uniRouterLookup[avalanche] = AVAX_SWAPROUTER;
         vm.label(COMMON_SWAP_ROUTER_02, "Uniswap Common Swap Router");
         vm.label(AVAX_SWAPROUTER, "Uniswap AVAX Swap Router");
-        quoterLookup[ethereum] = IQuoterV2(COMMON_QUOTER);
-        quoterLookup[arbitrum] = IQuoterV2(COMMON_QUOTER);
-        quoterLookup[optimism] = IQuoterV2(COMMON_QUOTER);
-        quoterLookup[polygon] = IQuoterV2(COMMON_QUOTER);
-        quoterLookup[base] = IQuoterV2(
+        uniQuoterLookup[ethereum] = IQuoterV2(COMMON_QUOTER);
+        uniQuoterLookup[arbitrum] = IQuoterV2(COMMON_QUOTER);
+        uniQuoterLookup[optimism] = IQuoterV2(COMMON_QUOTER);
+        uniQuoterLookup[polygon] = IQuoterV2(COMMON_QUOTER);
+        uniQuoterLookup[base] = IQuoterV2(
             0x3d4e44Eb1374240CE5F1B871ab261CD16335B76a
         );
-        quoterLookup[avalanche] = IQuoterV2(AVAX_QUOTER);
+        uniQuoterLookup[avalanche] = IQuoterV2(AVAX_QUOTER);
         vm.label(COMMON_QUOTER, "Uniswap Common Quoter");
         vm.label(AVAX_QUOTER, "Uniswap AVAX Quoter");
     }
