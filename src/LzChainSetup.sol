@@ -45,6 +45,7 @@ contract LzChainSetup is BaseChainSetup {
         bytes memory packet
     )
         private
+        pure
         returns (
             uint64 nonce,
             uint16 localChainId,
@@ -65,7 +66,7 @@ contract LzChainSetup is BaseChainSetup {
 
     function extractAppPayload(
         bytes memory packet
-    ) private returns (bytes memory payload) {
+    ) private pure returns (bytes memory payload) {
         uint start = 64 + 52;
         uint payloadLength = packet.length - start;
         payload = new bytes(payloadLength);
@@ -90,10 +91,10 @@ contract LzChainSetup is BaseChainSetup {
     ) public {
         bytes memory packet = getPacket(src);
         (
-            uint64 nonce,
-            uint16 localChainId,
+            /*uint64 nonce*/,
+            /*uint16 localChainId*/,
             address sourceUa,
-            uint16 dstChainId,
+            /*uint16 dstChainId*/,
             address dstAddress
         ) = extractLzInfo(packet);
         bytes memory payload = extractAppPayload(packet);
