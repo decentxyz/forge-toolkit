@@ -28,6 +28,6 @@ contract ChainsInfo is BaseChainSetup {
         configureChain("fantom_testnet", false, 4002, 0x84C7dD519Ea924bf1Cf6613f9127F26D7aB801D0, 0x07B9c47452C41e8E00f98aC4c075F5c443281d2A);
         // configureChain("moonbeam", , , );
         // configureChain("moonbeam_testnet", , , );
-        // configureChain("rarible_testnet", , , );
+        configureChain("rarible_testnet", true, 1918988905, 0x2c9Dd2b2cd55266e3b5c3C95840F3c037fbCb856);
     }
 }
