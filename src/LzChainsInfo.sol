@@ -26,6 +26,7 @@ contract LzChainsInfo is LzChainSetup {
     configureLzChain("fantom_testnet", 10112, 0x7dcAD72640F835B0FA36EFD3D6d3ec902C7E5acf);
     configureLzChain("moonbeam", 126, 0x9740FF91F1985D8d2B71494aE1A2f723bb3Ed9E4);
     configureLzChain("moonbeam_testnet", 10126,  0xb23b28012ee92E8dE39DEb57Af31722223034747);
+    configureLzChain("rarible", 235, 0xb6319cC6c8c27A8F5dAF0dD3DF91EA35C4720dd7);
     configureLzChain("rarible_testnet", 10235, 0x83c73Da98cf733B03315aFa8758834b36a195b87);
   }
 }
