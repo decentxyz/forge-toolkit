@@ -12,8 +12,10 @@ contract ChainAliases {
     string constant optimism_sepolia = "optimism_sepolia";
     string constant base = "base";
     string constant base_goerli = "base_goerli";
+    string constant base_sepolia = "base_sepolia";
     string constant zora = "zora";
     string constant zora_goerli = "zora_goerli";
+    string constant zora_sepolia = "zora_sepolia";
     string constant polygon = "polygon";
     string constant polygon_mumbai = "polygon_mumbai";
     string constant avalanche = "avalanche";
@@ -22,5 +24,6 @@ contract ChainAliases {
     string constant fantom_testnet = "fantom_testnet";
     string constant moonbeam = "moonbeam";
     string constant moonbeam_testnet = "moonbeam_testnet";
+    string constant rarible = "rarible";
     string constant rarible_testnet = "rarible_testnet";
 }
