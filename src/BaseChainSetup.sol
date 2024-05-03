@@ -120,6 +120,8 @@ contract BaseChainSetup is CommonBase {
         address weth,
         address wrapped
     ) public {
+        require(weth != address(0), string.concat('weth not set for chain: ', chain));
+        require(wrapped != address(0), string.concat('wrapped not set for chain: ', chain));
         try vm.createFork(_forkAlias(chain)) returns (uint256 forkId) {
             forkLookup[chain] = forkId;
         } catch {}
@@ -127,7 +129,10 @@ contract BaseChainSetup is CommonBase {
         vm.label(weth, string.concat(chain, "_WETH"));
         wethLookup[chain] = weth;
         if (weth != wrapped) {
+            require(!isGasEth, string.concat('isGasEth not set properly for chain: ', chain));
             vm.label(wrapped, string.concat(chain, "_WRAPPED"));
+        } else {
+            require(isGasEth, string.concat('isGasEth not set properly for chain: ', chain));
         }
         wrappedLookup[chain] = wrapped;
         chainIdLookup[chain] = chainId;

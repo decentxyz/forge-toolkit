@@ -26,4 +26,14 @@ contract ChainAliases {
     string constant moonbeam_testnet = "moonbeam_testnet";
     string constant rarible = "rarible";
     string constant rarible_testnet = "rarible_testnet";
+    string constant mantle = "mantle";
+    string constant mantle_sepolia = "mantle_sepolia";
+    string constant mode = "mode";
+    string constant mode_sepolia = "mode_sepolia";
+    string constant zksync = "zksync";
+    string constant zksync_sepolia = "zksync_sepolia";
+    string constant bnb = "bnb";
+    string constant bnb_testnet = "bnb_testnet";
+    string constant opbnb = "opbnb";
+    string constant opbnb_testnet = "opbnb_testnet";
 }

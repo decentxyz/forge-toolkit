@@ -16,8 +16,10 @@ contract LzChainsInfo is LzChainSetup {
     configureLzChain("optimism_sepolia", 10232, 0x55370E0fBB5f5b8dAeD978BA1c075a499eB107B8);
     configureLzChain("base", 184, 0xb6319cC6c8c27A8F5dAF0dD3DF91EA35C4720dd7);
     configureLzChain("base_goerli", 10160, 0x6aB5Ae6822647046626e83ee6dB8187151E1d5ab);
+    configureLzChain("base_sepolia", 10245, 0x55370E0fBB5f5b8dAeD978BA1c075a499eB107B8);
     configureLzChain("zora", 195, 0xb6319cC6c8c27A8F5dAF0dD3DF91EA35C4720dd7);
     configureLzChain("zora_goerli", 10195, 0x83c73Da98cf733B03315aFa8758834b36a195b87);
+    configureLzChain("zora_sepolia", 10249, 0x55370E0fBB5f5b8dAeD978BA1c075a499eB107B8);
     configureLzChain("polygon", 109, 0x3c2269811836af69497E5F486A85D7316753cf62);
     configureLzChain("polygon_mumbai", 10109, 0xf69186dfBa60DdB133E91E9A4B5673624293d8F8);
     configureLzChain("avalanche", 106, 0x3c2269811836af69497E5F486A85D7316753cf62);
@@ -28,5 +30,15 @@ contract LzChainsInfo is LzChainSetup {
     configureLzChain("moonbeam_testnet", 10126,  0xb23b28012ee92E8dE39DEb57Af31722223034747);
     configureLzChain("rarible", 235, 0xb6319cC6c8c27A8F5dAF0dD3DF91EA35C4720dd7);
     configureLzChain("rarible_testnet", 10235, 0x83c73Da98cf733B03315aFa8758834b36a195b87);
+    configureLzChain("mantle", 181, 0xb6319cC6c8c27A8F5dAF0dD3DF91EA35C4720dd7);
+    configureLzChain("mantle_sepolia", 10246, 0x53fd4C4fBBd53F6bC58CaE6704b92dB1f360A648);
+    configureLzChain("mode", 260, 0xb6319cC6c8c27A8F5dAF0dD3DF91EA35C4720dd7);
+    configureLzChain("mode_sepolia", 10260, 0x2cA20802fd1Fd9649bA8Aa7E50F0C82b479f35fe);
+    configureLzChain("zksync", 165, 0x9b896c0e23220469C7AE69cb4BbAE391eAa4C8da);
+    // configureLzChain("zksync_sepolia", 0, 0x0000000000000000000000000000000000000000);
+    configureLzChain("bnb", 102, 0x3c2269811836af69497E5F486A85D7316753cf62);
+    configureLzChain("bnb_testnet", 10102, 0x6Fcb97553D41516Cb228ac03FdC8B9a0a9df04A1);
+    configureLzChain("opbnb", 202, 0xb6319cC6c8c27A8F5dAF0dD3DF91EA35C4720dd7);
+    configureLzChain("opbnb_testnet", 10202, 0x83c73Da98cf733B03315aFa8758834b36a195b87);
   }
 }
