@@ -42,5 +42,6 @@ contract ChainsInfo is BaseChainSetup {
         // configureChain("bnb_testnet", true, 97, 0x0000000000000000000000000000000000000000);
         // configureChain("opbnb", true, 204, 0x0000000000000000000000000000000000000000);
         // configureChain("opbnb_testnet", true, 5611, 0x0000000000000000000000000000000000000000);
+        configureChain("degen", false, 666666666, 0xF058Eb3C946F0eaeCa3e6662300cb01165c64edE, 0xEb54dACB4C2ccb64F8074eceEa33b5eBb38E5387);
     }
 }

@@ -22,6 +22,7 @@ contract UniswapRouterHelpers is BaseChainSetup, ChainAliases, UsdcHelper {
         0xbb00FF08d01D300023C629E8fFfFcb65A5a578cE;
     address constant AVAX_QUOTER = 0xbe0F5544EC67e9B3b2D979aaA43f18Fd87E6257F;
     address constant ZORA_SWAPROUTER = 0x7De04c96BE5159c3b5CeffC82aa176dc81281557;
+    address constant DEGEN_SWAPROUTER = 0x9c0dF4b950ca19Db6fEC13ab79aD180a9C15a41E;
 
     function getUniRouter(string memory chain) public view returns (address) {
         return uniRouterLookup[chain];
@@ -185,6 +186,7 @@ contract UniswapRouterHelpers is BaseChainSetup, ChainAliases, UsdcHelper {
         uniRouterLookup[base] = 0x2626664c2603336E57B271c5C0b26F421741e481;
         uniRouterLookup[avalanche] = AVAX_SWAPROUTER;
         uniRouterLookup[zora] = ZORA_SWAPROUTER;
+        uniRouterLookup[degen] = DEGEN_SWAPROUTER;
         vm.label(COMMON_SWAP_ROUTER_02, "Uniswap Common Swap Router");
         vm.label(AVAX_SWAPROUTER, "Uniswap AVAX Swap Router");
         uniQuoterLookup[ethereum] = IQuoterV2(COMMON_QUOTER);

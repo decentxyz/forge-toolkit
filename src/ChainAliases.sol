@@ -36,4 +36,5 @@ contract ChainAliases {
     string constant bnb_testnet = "bnb_testnet";
     string constant opbnb = "opbnb";
     string constant opbnb_testnet = "opbnb_testnet";
+    string constant degen = "degen";
 }
