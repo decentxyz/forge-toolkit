@@ -37,11 +37,8 @@ contract ChainsInfo is BaseChainSetup {
         configureChain("mode", true, 34443, OP_STACK_WETH);
         configureChain("mode_sepolia", true, 919, 0x5CE359Ff65f8bc3c874c16Fa24A2c1fd26bB57CD);
         configureChain("zksync", true, 324, 0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91);
-        // configureChain("zksync_sepolia", true, 300, 0x0000000000000000000000000000000000000000);
-        // configureChain("bnb", true, 56, 0x0000000000000000000000000000000000000000);
-        // configureChain("bnb_testnet", true, 97, 0x0000000000000000000000000000000000000000);
-        // configureChain("opbnb", true, 204, 0x0000000000000000000000000000000000000000);
-        // configureChain("opbnb_testnet", true, 5611, 0x0000000000000000000000000000000000000000);
+        configureChain("bnb", false, 56, 0x2170Ed0880ac9A755fd29B2688956BD959F933F8, 0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c);
+        configureChain("opbnb", false, 204, 0xE7798f023fC62146e8Aa1b36Da45fb70855a77Ea, 0x4200000000000000000000000000000000000006);
         configureChain("degen", false, 666666666, 0xF058Eb3C946F0eaeCa3e6662300cb01165c64edE, 0xEb54dACB4C2ccb64F8074eceEa33b5eBb38E5387);
         configureChain("cyber", true, 7560, OP_STACK_WETH);
     }

@@ -55,6 +55,7 @@ contract SgChainsInfo is LzChainSetup {
         addRouter("linea", 0x2F6F07CDcf3588944Bf4C42aC74ff24bF56e7590);
         addRouter("kava", 0x2F6F07CDcf3588944Bf4C42aC74ff24bF56e7590);
         addRouter("mantle", 0x2F6F07CDcf3588944Bf4C42aC74ff24bF56e7590);
+        addRouter("bnb", 0x4a364f8c717cAAD9A442737Eb7b8A55cc6cf18D8);
 
         addComposer("ethereum", STARGATE_COMMON_COMPOSER);
         addComposer("arbitrum", STARGATE_COMMON_COMPOSER);
@@ -67,6 +68,7 @@ contract SgChainsInfo is LzChainSetup {
         addComposer("linea", STARGATE_COMMON_COMPOSER);
         addComposer("kava", STARGATE_COMMON_COMPOSER);
         addComposer("mantle", 0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97);
+        addComposer("bnb", 0xeCc19E177d24551aA7ed6Bc6FE566eCa726CC8a9);
         vm.label(STARGATE_COMMON_COMPOSER, "stargate_composer");
 
         addBridge("ethereum", 0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97);

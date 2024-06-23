@@ -15,14 +15,8 @@ contract UniswapRouterHelpers is BaseChainSetup, ChainAliases, UsdcHelper {
     uint24 constant TICK_SIZE_2 = 300;
     uint24 constant TICK_SIZE_3 = 500;
 
-    address constant COMMON_SWAP_ROUTER_02 =
-        0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45;
+    address constant COMMON_SWAP_ROUTER_02 = 0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45;
     address constant COMMON_QUOTER = 0x61fFE014bA17989E743c5F6cB21bF9697530B21e;
-    address constant AVAX_SWAPROUTER =
-        0xbb00FF08d01D300023C629E8fFfFcb65A5a578cE;
-    address constant AVAX_QUOTER = 0xbe0F5544EC67e9B3b2D979aaA43f18Fd87E6257F;
-    address constant ZORA_SWAPROUTER = 0x7De04c96BE5159c3b5CeffC82aa176dc81281557;
-    address constant DEGEN_SWAPROUTER = 0x9c0dF4b950ca19Db6fEC13ab79aD180a9C15a41E;
 
     function getUniRouter(string memory chain) public view returns (address) {
         return uniRouterLookup[chain];
@@ -179,25 +173,24 @@ contract UniswapRouterHelpers is BaseChainSetup, ChainAliases, UsdcHelper {
     // for avax: https://gov.uniswap.org/t/deploy-uniswap-v3-on-avalanche/20587/19
     // avax github pr: https://github.com/Uniswap/docs/pull/629/files?short_path=132b68b#diff-132b68b7465e5d26429a710879ab4c7e7ade298c9e6be35279a7794054bc2126
     function loadAllUniRouterInfo() public {
+        // Uniswap SwapRouter02
         uniRouterLookup[ethereum] = COMMON_SWAP_ROUTER_02;
         uniRouterLookup[arbitrum] = COMMON_SWAP_ROUTER_02;
         uniRouterLookup[optimism] = COMMON_SWAP_ROUTER_02;
         uniRouterLookup[polygon] = COMMON_SWAP_ROUTER_02;
         uniRouterLookup[base] = 0x2626664c2603336E57B271c5C0b26F421741e481;
-        uniRouterLookup[avalanche] = AVAX_SWAPROUTER;
-        uniRouterLookup[zora] = ZORA_SWAPROUTER;
-        uniRouterLookup[degen] = DEGEN_SWAPROUTER;
-        vm.label(COMMON_SWAP_ROUTER_02, "Uniswap Common Swap Router");
-        vm.label(AVAX_SWAPROUTER, "Uniswap AVAX Swap Router");
+        uniRouterLookup[avalanche] = 0xbb00FF08d01D300023C629E8fFfFcb65A5a578cE;
+        uniRouterLookup[zora] = 0x7De04c96BE5159c3b5CeffC82aa176dc81281557;
+        uniRouterLookup[degen] = 0x9c0dF4b950ca19Db6fEC13ab79aD180a9C15a41E;
+        uniRouterLookup[bnb] = 0xB971eF87ede563556b2ED4b1C0b0019111Dd85d2;
+
+        // Uniswap QuoterV2
         uniQuoterLookup[ethereum] = IQuoterV2(COMMON_QUOTER);
         uniQuoterLookup[arbitrum] = IQuoterV2(COMMON_QUOTER);
         uniQuoterLookup[optimism] = IQuoterV2(COMMON_QUOTER);
         uniQuoterLookup[polygon] = IQuoterV2(COMMON_QUOTER);
-        uniQuoterLookup[base] = IQuoterV2(
-            0x3d4e44Eb1374240CE5F1B871ab261CD16335B76a
-        );
-        uniQuoterLookup[avalanche] = IQuoterV2(AVAX_QUOTER);
-        vm.label(COMMON_QUOTER, "Uniswap Common Quoter");
-        vm.label(AVAX_QUOTER, "Uniswap AVAX Quoter");
+        uniQuoterLookup[base] = IQuoterV2(0x3d4e44Eb1374240CE5F1B871ab261CD16335B76a);
+        uniQuoterLookup[avalanche] = IQuoterV2(0xbe0F5544EC67e9B3b2D979aaA43f18Fd87E6257F);
+        uniQuoterLookup[bnb] = IQuoterV2(0x78D78E420Da98ad378D7799bE8f4AF69033EB077);
     }
 }
