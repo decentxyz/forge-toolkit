@@ -35,5 +35,6 @@ contract LzChainsInfo is LzChainSetup {
     configureLzChain("opbnb", 202, 0xb6319cC6c8c27A8F5dAF0dD3DF91EA35C4720dd7);
     configureLzChain("degen", 267, 0xb6319cC6c8c27A8F5dAF0dD3DF91EA35C4720dd7);
     configureLzChain("cyber", 283, 0xb6319cC6c8c27A8F5dAF0dD3DF91EA35C4720dd7);
+    configureLzChain("blast", 243, 0xb6319cC6c8c27A8F5dAF0dD3DF91EA35C4720dd7);
   }
 }

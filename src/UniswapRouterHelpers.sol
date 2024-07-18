@@ -183,6 +183,7 @@ contract UniswapRouterHelpers is BaseChainSetup, ChainAliases, UsdcHelper {
         uniRouterLookup[zora] = 0x7De04c96BE5159c3b5CeffC82aa176dc81281557;
         uniRouterLookup[degen] = 0x9c0dF4b950ca19Db6fEC13ab79aD180a9C15a41E;
         uniRouterLookup[bnb] = 0xB971eF87ede563556b2ED4b1C0b0019111Dd85d2;
+        uniRouterLookup[blast] = 0x549FEB8c9bd4c12Ad2AB27022dA12492aC452B66;
 
         // Uniswap QuoterV2
         uniQuoterLookup[ethereum] = IQuoterV2(COMMON_QUOTER);
@@ -191,6 +192,9 @@ contract UniswapRouterHelpers is BaseChainSetup, ChainAliases, UsdcHelper {
         uniQuoterLookup[polygon] = IQuoterV2(COMMON_QUOTER);
         uniQuoterLookup[base] = IQuoterV2(0x3d4e44Eb1374240CE5F1B871ab261CD16335B76a);
         uniQuoterLookup[avalanche] = IQuoterV2(0xbe0F5544EC67e9B3b2D979aaA43f18Fd87E6257F);
+        uniQuoterLookup[degen] = IQuoterV2(0xe0b3133592CD29BaA7d958Bc7675C40E83071Ae1);
+        uniQuoterLookup[zora] = IQuoterV2(0x11867e1b3348F3ce4FcC170BC5af3d23E07E64Df);
         uniQuoterLookup[bnb] = IQuoterV2(0x78D78E420Da98ad378D7799bE8f4AF69033EB077);
+        uniQuoterLookup[blast] = IQuoterV2(0x6Cdcd65e03c1CEc3730AeeCd45bc140D57A25C77);
     }
 }

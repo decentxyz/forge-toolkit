@@ -37,5 +37,6 @@ contract ChainsInfo is BaseChainSetup {
         configureChain("opbnb", false, 204, 0xE7798f023fC62146e8Aa1b36Da45fb70855a77Ea, 0x4200000000000000000000000000000000000006);
         configureChain("degen", false, 666666666, 0xF058Eb3C946F0eaeCa3e6662300cb01165c64edE, 0xEb54dACB4C2ccb64F8074eceEa33b5eBb38E5387);
         configureChain("cyber", true, 7560, OP_STACK_WETH);
+        configureChain("blast", true, 81457, 0x4300000000000000000000000000000000000004);
     }
 }
