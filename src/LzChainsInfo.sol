@@ -9,6 +9,7 @@ contract LzChainsInfo is LzChainSetup {
     configureLzChain("ethereum", 101, 0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675);
     configureLzChain("sepolia", 10161, 0xae92d5aD7583AD66E49A0c67BAd18F6ba52dDDc1);
     configureLzChain("arbitrum", 110, 0x3c2269811836af69497E5F486A85D7316753cf62);
+    configureLzChain("arbitrum_nova", 175, 0x4EE2F9B7cf3A68966c370F3eb2C16613d3235245);
     configureLzChain("arbitrum_sepolia", 10231, 0x6098e96a28E02f27B1e6BD381f870F1C8Bd169d3);
     configureLzChain("optimism", 111, 0x3c2269811836af69497E5F486A85D7316753cf62);
     configureLzChain("optimism_sepolia", 10232, 0x55370E0fBB5f5b8dAeD978BA1c075a499eB107B8);
@@ -36,5 +37,6 @@ contract LzChainsInfo is LzChainSetup {
     configureLzChain("degen", 267, 0xb6319cC6c8c27A8F5dAF0dD3DF91EA35C4720dd7);
     configureLzChain("cyber", 283, 0xb6319cC6c8c27A8F5dAF0dD3DF91EA35C4720dd7);
     configureLzChain("blast", 243, 0xb6319cC6c8c27A8F5dAF0dD3DF91EA35C4720dd7);
+    configureLzChain("scroll", 214, 0xb6319cC6c8c27A8F5dAF0dD3DF91EA35C4720dd7);
   }
 }

@@ -5,6 +5,7 @@ contract ChainAliases {
     string constant ethereum = "ethereum";
     string constant sepolia = "sepolia";
     string constant arbitrum = "arbitrum";
+    string constant arbitrum_nova = "arbitrum_nova";
     string constant arbitrum_sepolia = "arbitrum_sepolia";
     string constant optimism = "optimism";
     string constant optimism_sepolia = "optimism_sepolia";
@@ -35,4 +36,5 @@ contract ChainAliases {
     string constant degen = "degen";
     string constant cyber = "cyber";
     string constant blast = "blast";
+    string constant scroll = "scroll";
 }

@@ -11,6 +11,7 @@ contract ChainsInfo is BaseChainSetup {
         configureChain("ethereum", true, 1, 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2);
         configureChain("sepolia", true, 11155111, 0x7b79995e5f793A07Bc00c21412e50Ecae098E7f9);
         configureChain("arbitrum", true, 42161, 0x82aF49447D8a07e3bd95BD0d56f35241523fBab1);
+        configureChain("arbitrum_nova", true, 42170, 0x722E8BdD2ce80A4422E880164f2079488e115365);
         configureChain("arbitrum_sepolia", true, 421614, 0x0133Ff8B0eA9f22e510ff3A8B245aa863b2Eb13F);
         configureChain("optimism", true, 10, OP_STACK_WETH);
         configureChain("optimism_sepolia", true, 11155420, OP_STACK_WETH);
@@ -38,5 +39,6 @@ contract ChainsInfo is BaseChainSetup {
         configureChain("degen", false, 666666666, 0xF058Eb3C946F0eaeCa3e6662300cb01165c64edE, 0xEb54dACB4C2ccb64F8074eceEa33b5eBb38E5387);
         configureChain("cyber", true, 7560, OP_STACK_WETH);
         configureChain("blast", true, 81457, 0x4300000000000000000000000000000000000004);
+        configureChain("scroll", true, 534352, 0x5300000000000000000000000000000000000004);
     }
 }
