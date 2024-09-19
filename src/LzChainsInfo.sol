@@ -38,5 +38,6 @@ contract LzChainsInfo is LzChainSetup {
     configureLzChain("cyber", 283, 0xb6319cC6c8c27A8F5dAF0dD3DF91EA35C4720dd7);
     configureLzChain("blast", 243, 0xb6319cC6c8c27A8F5dAF0dD3DF91EA35C4720dd7);
     configureLzChain("scroll", 214, 0xb6319cC6c8c27A8F5dAF0dD3DF91EA35C4720dd7);
+    configureLzChain("gnosis", 145, 0x9740FF91F1985D8d2B71494aE1A2f723bb3Ed9E4);
   }
 }
