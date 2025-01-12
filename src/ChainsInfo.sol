@@ -41,5 +41,6 @@ contract ChainsInfo is BaseChainSetup {
         configureChain("blast", true, 81457, 0x4300000000000000000000000000000000000004);
         configureChain("scroll", true, 534352, 0x5300000000000000000000000000000000000004);
         configureChain("gnosis", false, 100, 0x6A023CCd1ff6F2045C3309768eAd9E68F978f6e1, 0xe91D153E0b41518A2Ce8Dd3D7944Fa863463a97d);
+        configureChain("superposition", true, 55244, 0x05258898bF0a8AC1001CEc61b529dfEb4Deb134A);
     }
 }

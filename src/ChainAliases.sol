@@ -38,4 +38,5 @@ contract ChainAliases {
     string constant blast = "blast";
     string constant scroll = "scroll";
     string constant gnosis = "gnosis";
+    string constant superposition = "superposition";
 }
